@@ -1,0 +1,9 @@
+name = "GlobalOceanBioME"
+uuid = "6721f89c-e0db-41b8-bcae-ef5166b5aae6"
+authors = ["Jago Stong-Wright <jagoosw@protonmail.com>"]
+version = "0.1.0"
+
+[deps]
+ClimaOcean = "0376089a-ecfe-4b0e-a64f-9c555d74d754"
+OceanBioME = "a49af516-9db8-4be4-be45-1dad61c5a376"
+Oceananigans = "9e8cae18-63c1-5223-a75c-80ca9d6e9a09"
