@@ -2,7 +2,7 @@
 
 julia_version = "1.9.1"
 manifest_format = "2.0"
-project_hash = "d9871215101e5275aa4b94eef99e8e0153672f30"
+project_hash = "23cb6dbc2f5a9cb0b151e698d20ebde4ec4625bb"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -123,7 +123,7 @@ version = "1.16.0"
 
 [[deps.ClimaOcean]]
 deps = ["CUDA", "CubicSplines", "DataDeps", "JLD2", "KernelAbstractions", "Oceananigans", "Printf", "SeawaterPolynomials", "Statistics"]
-git-tree-sha1 = "3046ec849814095463ad00dd0cc5d18362087989"
+git-tree-sha1 = "5b2e3fcaac6db62640c344f760015152a2075c12"
 repo-rev = "jsw/add-biogeochemistry-interface"
 repo-url = "https://github.com/jagoosw/ClimaOcean.jl"
 uuid = "0376089a-ecfe-4b0e-a64f-9c555d74d754"
