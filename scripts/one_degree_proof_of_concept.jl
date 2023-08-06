@@ -1,6 +1,6 @@
 using ClimaOcean.NearGlobalSimulations: one_degree_near_global_simulation, cyclic_interpolate, current_time_index, next_time_index
 
-using Oceananigans, OceanBioME, GlobalOceanBioME, DataDeps
+using Oceananigans, OceanBioME, GlobalOceanBioME, DataDeps, JLD2
 using Oceananigans.Units
 using Oceananigans.Utils: WallTimeInterval
 using Oceananigans.BuoyancyModels: buoyancy
