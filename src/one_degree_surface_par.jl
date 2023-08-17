@@ -44,7 +44,7 @@ end
     return cyclic_interpolate(PAR₁, PAR₂, t)
 end
 
-# Data origionally from NASA MODIS-Aqua 2010 monthly mean (https://oceandata.sci.gsfc.nasa.gov  ), interpolated to one degree grid 
+# one degree data origionally from NASA MODIS-Aqua 2010 monthly mean (https://oceandata.sci.gsfc.nasa.gov)
 function OneDegreeSurfacePAR(architecture::AbstractArchitecture; data_path = datadep"2010_near_global_bgc/PAR.jld2")
     surfac_PAR_file = jldopen(data_path)
 
