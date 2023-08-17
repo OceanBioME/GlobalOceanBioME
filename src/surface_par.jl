@@ -16,15 +16,17 @@ struct SurfacePAR{D, I, F, T}
 
     times :: T
 
-    SurfacePAR(data::D, is::I, js::I, lon_offset::F, lat_offset::F, times::T) where {D, I, F, T} = 
-        new{D, I, F, T}(data, is, js, lon_offset, lat_offset, times)
+    resulution :: I
+
+    SurfacePAR(data::D, is::I, js::I, lon_offset::F, lat_offset::F, times::T, resolution::I) where {D, I, F, T} = 
+        new{D, I, F, T}(data, is, js, lon_offset, lat_offset, times, resolution)
 end
 
 adapt_structure(to, PAR::SurfacePAR) = SurfacePAR(adapt(to, PAR.data))
 
 @inline function (PAR::SurfacePAR)(x, y, t)
     # bit silly since in the PAR integraiton were going `x = xnode ...`, maybe I should make a discrete version of this
-    i, j = unsafe_trunc(Int, x + lon_offset), unsafe_trunc(Int, y + lat_offset)
+    i, j = unsafe_trunc(Int, (x + PAR.lon_offset) * PAR.resolution), unsafe_trunc(Int, (y + PAR.lat_offset) * PAR.resolution)
 
     i, j = max(1, i), max(1, j)
     i, j = min(is, i), min(js, j)
@@ -50,7 +52,8 @@ function SurfacePAR(architecture::AbstractArchitecture;
                     js = 150,
                     data_path = datadep"2010_near_global_bgc/PAR.jld2",
                     variable_name = "one_degree_climatology",
-                    times = non_leep_year_month_days)
+                    times = non_leep_year_month_days,
+                    resolution = 1)
 
     surfac_PAR_file = jldopen(data_path)
 
@@ -61,6 +64,6 @@ function SurfacePAR(architecture::AbstractArchitecture;
 
     close(surfac_PAR_file)
 
-    return SurfacePAR(surfac_PAR_data, is, js, lon_offset, lat_offset, times)
+    return SurfacePAR(surfac_PAR_data, is, js, lon_offset, lat_offset, times, resolution)
 end
 
