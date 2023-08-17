@@ -16,7 +16,7 @@ struct SurfacePAR{D, I, F, T}
 
     times :: T
 
-    SurfacePAR(data::D, is::I, js::J, lon_offset::F, lat_offset::F, times::T) where {D, I, F, T} = 
+    SurfacePAR(data::D, is::I, js::I, lon_offset::F, lat_offset::F, times::T) where {D, I, F, T} = 
         new{D, I, F, T}(data, is, js, lon_offset, lat_offset, times)
 end
 

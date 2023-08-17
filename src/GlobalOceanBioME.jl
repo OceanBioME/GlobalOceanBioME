@@ -4,7 +4,6 @@ export OneDegreeSurfacePAR
 
 using DataDeps
 
-
 function __init__(; remove_existing_data=false)
 
     ## Data for the one_degree_global_simulation
