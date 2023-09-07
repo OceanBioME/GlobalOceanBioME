@@ -16,14 +16,19 @@ struct SurfacePAR{D, I, F, T}
 
     times :: T
 
-    resulution :: I
+    resolution :: I
 
     SurfacePAR(data::D, is::I, js::I, lon_offset::F, lat_offset::F, times::T, resolution::I) where {D, I, F, T} = 
         new{D, I, F, T}(data, is, js, lon_offset, lat_offset, times, resolution)
 end
 
-adapt_structure(to, PAR::SurfacePAR) = SurfacePAR(adapt(to, PAR.data))
-
+adapt_structure(to, PAR::SurfacePAR) = SurfacePAR(adapt(to, PAR.data),
+                                                  adapt(to, PAR.is),
+                                                  adapt(to, PAR.js),
+                                                  adapt(to, PAR.lon_offset),
+                                                  adapt(to, PAR.lat_offset),
+                                                  adapt(to, PAR.times),
+                                                  adapt(to, PAR.resolution))
 @inline function (PAR::SurfacePAR)(x, y, t)
     # bit silly since in the PAR integraiton were going `x = xnode ...`, maybe I should make a discrete version of this
     i, j = unsafe_trunc(Int, (x + PAR.lon_offset) * PAR.resolution), unsafe_trunc(Int, (y + PAR.lat_offset) * PAR.resolution)
