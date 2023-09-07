@@ -2,7 +2,7 @@ module GlobalOceanBioME
 
 export OneDegreeSurfacePAR
 
-using DataDeps
+using DataDeps, Oceananigans.Units
 
 function __init__(; remove_existing_data=false)
 
