@@ -34,7 +34,7 @@ adapt_structure(to, PAR::SurfacePAR) = SurfacePAR(adapt(to, PAR.data),
     i, j = unsafe_trunc(Int, (x + PAR.lon_offset) * PAR.resolution), unsafe_trunc(Int, (y + PAR.lat_offset) * PAR.resolution)
 
     i, j = max(1, i), max(1, j)
-    i, j = min(is, i), min(js, j)
+    i, j = min(PAR.is, i), min(PAR.js, j)
 
     return cyclic_interpolate(PAR.data, i, j, t, PAR.times)
 end
@@ -44,7 +44,7 @@ end
     t = clock.time
 
     i, j = max(1, i), max(1, j)
-    i, j = min(is, i), min(js, j)
+    i, j = min(PAR.is, i), min(PAR.js, j)
 
     return cyclic_interpolate(PAR.data, i, j, t, PAR.times)
 end
