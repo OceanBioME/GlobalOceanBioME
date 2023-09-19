@@ -1,6 +1,9 @@
 using JLD2
 using Oceananigans.Architectures: arch_array, AbstractArchitecture
-using ClimaOcean.NearGlobalSimulations: current_time_index, next_time_index, cyclic_interpolate
+
+@inline current_time_index(time, tot_months) = mod(unsafe_trunc(Int32, time / thirty_days), tot_months) + 1
+@inline next_time_index(time, tot_months) = mod(unsafe_trunc(Int32, time / thirty_days) + 1, tot_months) + 1
+@inline cyclic_interpolate(u₁::Number, u₂, time) = u₁ + mod(time / thirty_days, 1) * (u₂ - u₁)
 
 import Adapt: adapt_structure, adapt
 
