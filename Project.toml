@@ -14,4 +14,4 @@ Oceananigans = "9e8cae18-63c1-5223-a75c-80ca9d6e9a09"
 [compat]
 JLD2 = "0.4"
 OceanBioME = "0.4, 0.5, 0.6, 0.7"
-Oceananigans = "0.85"
+Oceananigans = "0.85, 0.86, 0.87"
