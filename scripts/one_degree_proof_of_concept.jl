@@ -103,6 +103,10 @@ simulation.stop_time = time(simulation) + 1days
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
 
+prog(sim) = @info "$(prettytime(time(sim))) in $(prettytime(sim.run_wall_time)) with Δt = $(prettytime(sim.Δt))"
+
+add_callback!(simulation, prog, IterationInterval(10))
+
 run!(simulation)
 
 simulation.callbacks[:nan_checker] = Callback(Oceananigans.Simulations.NaNChecker(; fields = merge(model.tracers, model.velocities), erroring = true), IterationInterval(10))
@@ -111,11 +115,5 @@ simulation.Δt = 20minutes
 simulation.stop_time = start_time + 3 * 365days
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
-
-pop!(simulation.callbacks, :progress)
-
-prog(sim) = @info "$(prettytime(time(sim))) in $(prettytime(sim.run_wall_time)) with Δt = $(prettytime(sim.Δt))"
-
-add_callback!(sim, prog, IterationInterval(10))
 
 run!(simulation; pickup = false)
