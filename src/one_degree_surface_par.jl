@@ -55,7 +55,7 @@ function OneDegreeSurfacePAR(architecture::AbstractArchitecture; data_path = dat
     surfac_PAR_data = surfac_PAR_file["one_degree_climatology"] # should be mean not climatology
     surfac_PAR_data[isnan.(surfac_PAR_data)] .= 0.0
     
-    surface_PAR_data .*= 3.99e-10 * 545e12 / day # einstein / day to W/m²
+    surfac_PAR_data .*= 3.99e-10 * 545e12 / day # einstein / day to W/m²
 
     surfac_PAR_data = on_architecture(architecture, surfac_PAR_data)
 
