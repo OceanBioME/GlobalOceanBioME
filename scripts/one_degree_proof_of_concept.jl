@@ -53,7 +53,7 @@ simulation = one_degree_near_global_simulation(architecture;
     interior_background_vertical_viscosity = 1e-4,
     surface_background_vertical_viscosity = 1e-4,
     biogeochemistry,
-    biogeochemistry_kwargs = (surface_phytosynthetically_active_radiation = OneDegreeSurfacePAR(architecture), ),
+    biogeochemistry_kwargs = (surface_photosynthetically_active_radiation = OneDegreeSurfacePAR(architecture), ),
     tracers = (:N, :P, :Z, :D, :T, :S) # have to specify since NPZD adds T but not S, and buoyancy requires both
 )
 
