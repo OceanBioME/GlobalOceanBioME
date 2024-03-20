@@ -91,14 +91,14 @@ the mixed region
 file = jldopen(datadep"2010_near_global_bgc/initial_conditions.jld2")
 
 N_init = on_architecture(architecture, file["N"])
-P_init = on_architecture(architecture, file["P"])
+P_init = on_architecture(architecture, file["P"]./6.625)# mmolC -> mmolN
 Z_init = on_architecture(architecture, file["Z"])
 
 close(file)
 
 set!(model, N = N_init, P = P_init, Z = Z_init)
 
-simulation.Δt = 2minute
+simulation.Δt = 10minute
 simulation.stop_time = time(simulation) + 1days
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
