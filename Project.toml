@@ -12,6 +12,4 @@ OceanBioME = "a49af516-9db8-4be4-be45-1dad61c5a376"
 Oceananigans = "9e8cae18-63c1-5223-a75c-80ca9d6e9a09"
 
 [compat]
-JLD2 = "0.4"
-OceanBioME = "0.4, 0.5, 0.6, 0.7"
-Oceananigans = "0.85, 0.86, 0.87, 0.88, 0.89, 0.90, 0.91"
+OceanBioME = "0.10"
