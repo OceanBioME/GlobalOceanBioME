@@ -87,12 +87,14 @@ P and N are a direct downsampling and unit conversion from https://doi.org/10.48
 Z is downsampled and unit converted from https://doi.org/10.48670/moi-00020 and then divided by 
 the mixed layer depth from https://doi.org/10.48670/moi-00024, and then applied uniformly over
 the mixed region
+
+I think I forgot to convert the units. For zooplankton assume they are 138:106:16:1 O₂:C:N:P redfield ratio.
 """
 file = jldopen(datadep"2010_near_global_bgc/initial_conditions.jld2")
 
 N_init = on_architecture(architecture, file["N"])
 P_init = on_architecture(architecture, file["P"]./6.625)# mmolC -> mmolN
-Z_init = on_architecture(architecture, file["Z"])
+Z_init = on_architecture(architecture, file["Z"]./(138*16*2+106*12+16*14+1*31)*16)
 
 close(file)
 
