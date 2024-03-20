@@ -1,5 +1,5 @@
 using JLD2
-using Oceananigans.Architectures: arch_array, AbstractArchitecture
+using Oceananigans.Architectures: on_architecture, AbstractArchitecture
 
 import Adapt: adapt_structure, adapt
 
@@ -65,7 +65,7 @@ function SurfacePAR(architecture::AbstractArchitecture;
     surfac_PAR_data = surfac_PAR_file[variable_name]
     surfac_PAR_data[isnan.(surfac_PAR_data)] .= 0.0
 
-    surfac_PAR_data = arch_array(architecture, surfac_PAR_data)
+    surfac_PAR_data = on_architecture(architecture, surfac_PAR_data)
 
     close(surfac_PAR_file)
 

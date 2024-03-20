@@ -23,6 +23,8 @@ function __init__(; remove_existing_data=false)
     remove_existing_data && rm(datadep"near_global_one_degree_bgc", recursive=true, force=true)
 end
 
+thirty_days = 30days
+
 include("cyclic_interpolation.jl")
 include("surface_par.jl")
 include("one_degree_surface_par.jl")
