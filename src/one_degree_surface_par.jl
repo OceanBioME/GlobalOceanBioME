@@ -2,9 +2,9 @@ using JLD2
 using Oceananigans.Architectures: on_architecture, AbstractArchitecture
 
 # this needs to be replaced with proper datetime stuff in the future
-@inline current_time_index(time, tot_months) = mod(unsafe_trunc(Int32, time / thirty_days), tot_months) + 1
-@inline next_time_index(time, tot_months) = mod(unsafe_trunc(Int32, time / thirty_days) + 1, tot_months) + 1
-@inline cyclic_interpolate(u₁::Number, u₂, time) = u₁ + mod(time / thirty_days, 1) * (u₂ - u₁)
+@inline current_time_index(time) = mod(unsafe_trunc(Int, time / thirty_days), 12) + 1
+@inline next_time_index(time) = mod(unsafe_trunc(Int, time / thirty_days) + 1, 12) + 1
+@inline cyclic_interpolate(u₁, u₂, time) = u₁ + mod(time / thirty_days, 1) * (u₂ - u₁)
 
 import Adapt: adapt_structure, adapt
 
@@ -22,8 +22,8 @@ adapt_structure(to, PAR::OneDegreeSurfacePAR) = OneDegreeSurfacePAR(adapt(to, PA
     i, j = max(1, i), max(1, j)
     i, j = min(360, i), min(150, j)
 
-    n1 = current_time_index(t, 12)
-    n2 = next_time_index(t, 12)
+    n1 = current_time_index(t)
+    n2 = next_time_index(t)
 
     PAR1 = @inbounds PAR.data[i, j, n1]
     PAR2 = @inbounds PAR.data[i, j, n2]
@@ -37,8 +37,8 @@ end
     i, j = max(1, i), max(1, j)
     i, j = min(360, i), min(150, j)
 
-    n₁ = current_time_index(t, 12)
-    n₂ = next_time_index(t, 12)
+    n₁ = current_time_index(t)
+    n₂ = next_time_index(t)
 
     @inbounds begin
         PAR₁ = PAR.data[i, j, n₁]

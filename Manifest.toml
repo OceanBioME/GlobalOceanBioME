@@ -159,7 +159,7 @@ weakdeps = ["SparseArrays"]
 
 [[deps.ClimaOcean]]
 deps = ["CUDA", "CubicSplines", "DataDeps", "Downloads", "JLD2", "KernelAbstractions", "NCDatasets", "Oceananigans", "Printf", "SeawaterPolynomials", "Statistics"]
-git-tree-sha1 = "4040cb5c86551347552693ec8aad2918cac37c5c"
+git-tree-sha1 = "ce0b767a724851615c4ecbd883756a5e5abf8489"
 repo-rev = "jsw/add-biogeochemistry-interface"
 repo-url = "https://github.com/jagoosw/ClimaOcean.jl"
 uuid = "0376089a-ecfe-4b0e-a64f-9c555d74d754"
