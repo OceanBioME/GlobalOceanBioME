@@ -81,26 +81,9 @@ simulation.output_writers[:fields] = JLD2OutputWriter(model, merge(model.velocit
                                                       with_halos = true,
                                                       overwrite_existing = true)
 
-""" Load initial conditions from Copernicus models.
+set!(model, N = 10.0, P = 0.1, Z = 0.01)
 
-P and N are a direct downsampling and unit conversion from https://doi.org/10.48670/moi-00015
-Z is downsampled and unit converted from https://doi.org/10.48670/moi-00020 and then divided by 
-the mixed layer depth from https://doi.org/10.48670/moi-00024, and then applied uniformly over
-the mixed region
-
-I think I forgot to convert the units. For zooplankton assume they are 138:106:16:1 O₂:C:N:P redfield ratio.
-"""
-file = jldopen(datadep"2010_near_global_bgc/initial_conditions.jld2")
-
-N_init = on_architecture(architecture, file["N"])
-P_init = on_architecture(architecture, file["P"]./6.625)# mmolC -> mmolN
-Z_init = on_architecture(architecture, file["Z"]./(138*16*2+106*12+16*14+1*31)*16)
-
-close(file)
-
-set!(model, N = N_init, P = P_init, Z = Z_init)
-
-simulation.Δt = 10minute
+simulation.Δt = 20minute
 simulation.stop_time = time(simulation) + 1days
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
@@ -113,7 +96,7 @@ run!(simulation)
 
 simulation.callbacks[:nan_checker] = Callback(Oceananigans.Simulations.NaNChecker(; fields = merge(model.tracers, model.velocities), erroring = true), IterationInterval(10))
 
-simulation.Δt = 20minutes
+simulation.Δt = 10minutes
 simulation.stop_time = start_time + 3 * 365days
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
