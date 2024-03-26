@@ -9,7 +9,7 @@ https://github.com/OceanBioME/GlobalOceanBioME/assets/26657828/ca2dd956-5fa5-4bb
 
 <details>
   <summary>More detailed description of proof of concept above</summary>
-  This proof of concept is a 1°x1° near global run between 75°N and 75°S with 48 vertical levels.
+  This proof of concept is a 1°x1° near-global run between 75°N and 75°S with 48 vertical levels.
   
   The physics includes isopycnal skew-symmetric diffusivity and a convective adjustment boundary layer closure, and the biogeochemistry is a simple 4-variable nutrient, phytoplankton, zooplankton, detritus model (<a href="https://oceanbiome.github.io/OceanBioME.jl/stable/model_components/biogeochemical/NPZ/">detailed here</a>). 
   
