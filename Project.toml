@@ -1,6 +1,6 @@
 name = "GlobalOceanBioME"
 uuid = "6721f89c-e0db-41b8-bcae-ef5166b5aae6"
-authors = ["Jago Stong-Wright <jagoosw@protonmail.com>"]
+authors = ["Jago Stong-Wright <jagoosw@protonmail.com> and OceanBioME contributors"]
 version = "0.1.0"
 
 [deps]
@@ -13,4 +13,4 @@ Oceananigans = "9e8cae18-63c1-5223-a75c-80ca9d6e9a09"
 
 [compat]
 ClimaOcean = "0.1.2"
-OceanBioME = "0.10"
+OceanBioME = "0.10.1"
