@@ -53,13 +53,13 @@ simulation = one_degree_near_global_simulation(architecture;
     interior_background_vertical_viscosity = 1e-4,
     surface_background_vertical_viscosity = 1e-4,
     biogeochemistry,
-    biogeochemistry_kwargs = (surface_photosynthetically_active_radiation = OneDegreeSurfacePAR(architecture), scale_negatives = true),
+    biogeochemistry_kwargs = (surface_photosynthetically_active_radiation = OneDegreeSurfacePAR(architecture), scale_negatives = true, invalid_fill_value = 0),
     tracers = (:N, :P, :Z, :D, :T, :S) # have to specify since NPZD adds T but not S, and buoyancy requires both
 )
 
 # Define output
 slices_save_interval = 2day
-fields_save_interval = 1days
+fields_save_interval = 3hour
 Nx, Ny, Nz = size(simulation.model.grid)
 
 dir = "bgc" 
@@ -69,7 +69,7 @@ with_isopycnal_skew_symmetric_diffusivity || (output_prefix *= "_no_gm")
 
 simulation.output_writers[:checkpointer] = Checkpointer(simulation.model; dir,
                                                         prefix = output_prefix * "_checkpointer",
-                                                        schedule = TimeInterval(365days),
+                                                        schedule = TimeInterval(5days),
                                                         cleanup = true,
                                                         overwrite_existing = true)
 
@@ -79,25 +79,38 @@ simulation.output_writers[:fields] = JLD2OutputWriter(model, merge(model.velocit
                                                       schedule = TimeInterval(fields_save_interval),
                                                       filename = output_prefix * "_fields",
                                                       with_halos = true,
-                                                      overwrite_existing = true)
+                                                      overwrite_existing = true,
+indices = (:, :, model.grid.Nz))
+#=
+""" Load initial conditions from Copernicus models.
 
+P and N are a direct downsampling and unit conversion from https://doi.org/10.48670/moi-00015
+Z is downsampled and unit converted from https://doi.org/10.48670/moi-00020 and then divided by 
+the mixed layer depth from https://doi.org/10.48670/moi-00024, and then applied uniformly over
+the mixed region
+
+I think the units are wrong still. For now assume zooplankton are 138:106:16:1 O₂:C:N:P redfield ratio.
+"""
+file = jldopen(datadep"2010_near_global_bgc/initial_conditions.jld2")
+
+N_init = on_architecture(architecture, file["N"])
+P_init = on_architecture(architecture, file["P"].*16/106)# mmolC -> mmolN
+Z_init = on_architecture(architecture, file["Z"].*16/(138*16*2+106*12+16*14+1*31)) # mg -> mmolN
+
+close(file)
+
+set!(model, N = N_init, P = P_init, Z = Z_init)
+=#
 set!(model, N = 10.0, P = 0.1, Z = 0.01)
-
-simulation.Δt = 20minute
-simulation.stop_time = time(simulation) + 1days
-
-@info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
 
 prog(sim) = @info "$(prettytime(time(sim))) in $(prettytime(sim.run_wall_time)) with Δt = $(prettytime(sim.Δt))"
 
 add_callback!(simulation, prog, IterationInterval(10))
 
-run!(simulation)
-
 simulation.callbacks[:nan_checker] = Callback(Oceananigans.Simulations.NaNChecker(; fields = merge(model.tracers, model.velocities), erroring = true), IterationInterval(10))
 
-simulation.Δt = 10minutes
-simulation.stop_time = start_time + 3 * 365days
+simulation.Δt = 20minute
+simulation.stop_time = 345days + 365days*3
 
 @info "Running a simulation with Δt = $(prettytime(simulation.Δt)) from $(prettytime(simulation.model.clock.time)) until $(prettytime(simulation.stop_time))"
 
