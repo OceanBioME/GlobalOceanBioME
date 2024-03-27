@@ -8,6 +8,8 @@ P_plt = @lift interior(P[$n], :, :, 1)
 
 fig = Figure()
 
+title = @lift "$(prettytime(P.times[$n]))"
+
 ax = GeoAxis(fig[1, 1];title, dest = "+proj=natearth2")
 
 x, y, z = nodes(P)
