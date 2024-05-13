@@ -12,5 +12,5 @@ OceanBioME = "a49af516-9db8-4be4-be45-1dad61c5a376"
 Oceananigans = "9e8cae18-63c1-5223-a75c-80ca9d6e9a09"
 
 [compat]
-ClimaOcean = "0.1.2"
+ClimaOcean = "0.1.3"
 OceanBioME = "0.10.1"
